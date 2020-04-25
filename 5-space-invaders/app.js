@@ -38,10 +38,10 @@ document.addEventListener("DOMContentLoaded", () => {
     36,
     37,
     38,
-    39,
+    39
   ];
 
-  alienInvaders.forEach((invader) =>
+  alienInvaders.forEach(invader =>
     squares[currentInvaderIndex + invader].classList.add("invader")
   );
 
@@ -73,19 +73,27 @@ document.addEventListener("DOMContentLoaded", () => {
       else direction = -1;
     }
     for (let i = 0; i <= alienInvaders.length - 1; i++) {
-      squares(alienInvaders[i]).classList.remove("invader");
+      squares[alienInvaders[i]].classList.remove("invader");
     }
     for (let i = 0; i <= alienInvaders.length - 1; i++) {
       alienInvaders[i] += direction;
     }
     for (let i = 0; i <= alienInvaders.length - 1; i++) {
-      squares(alienInvaders[i]).classList.add("invader");
+      squares[alienInvaders[i]].classList.add("invader");
     }
 
     if (squares[currentShooterIndex].classList.contains("invader", "shooter")) {
-      resultDisplay.textContent("Game Over");
+      resultDisplay.textContent = "Game Over";
       squares[currentShooterIndex].classList.add("boom");
       clearInterval(invaderId);
     }
+
+    for (let i = 0; i <= alienInvaders.length - 1; i++) {
+      if (alienInvaders[i] > squares.length - (width - 1)) {
+        resultDisplay.textContent = "Game Over";
+        clearInterval(invaderId);
+      }
+    }
   }
+  invaderId = setInterval(moveInvaders, 500);
 });
